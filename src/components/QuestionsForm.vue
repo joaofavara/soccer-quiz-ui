@@ -3,13 +3,13 @@
 		<h1>QuestionsForm</h1>
 		<md-switch v-model="location" class="md-primary">
 			<span v-if="location">Futebol Brasileiro</span>
-			<span v-else>Futebol Internacional</span>
+			<span v-else>Futebol International</span>
 		</md-switch>
 
 		<div class="md-layout-item">
 			<md-field>
-				<md-select v-model="nacionalChampionship" placeholder="Nacional Championship">
-					<div v-for="(item, index) in nacionalOptions" :key="index">
+				<md-select v-model="nationalChampionship" placeholder="national Championship">
+					<div v-for="(item, index) in nationalOptions" :key="index">
 						<md-option :value="item.value">{{ item.label }}</md-option>
 					</div>
 				</md-select>
@@ -54,8 +54,13 @@
 </template>
 
 <script>
+	import MixinForm from './mixins/mixinForm';
+
 	export default {
 		name: 'QuestionsForm',
+		mixins: [
+			MixinForm
+		],
 		data() {
 			return {
 				location: false,
@@ -73,17 +78,14 @@
 					{ value: 'd', label: 'D'}
 				],
 				correctAnswer: null,
-				nacionalChampionship: null,
-				nacionalOptions: [
-					{ value: 'campeonato_br', label: 'Campeonato Brasileiro Série A'}
-				]
+				nationalChampionship: null,
 			}
 		},
 		methods: {
 			sendForm() {
 				const pergunta = {
-					type: this.location ? "Futebol Brasileiro" : "Futebol Internacional",
-					championship: this.nacionalChampionship,
+					type: this.location ? "Futebol Brasileiro" : "Futebol International",
+					championship: this.nationalChampionship,
 					question: this.question,
 					answers: this.answers,
 					correctAnswer: this.correctAnswer
